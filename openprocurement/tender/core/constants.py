@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
-from openprocurement.api.constants import TZ, CPV_ITEMS_CLASS_FROM
+from openprocurement.api.constants import TZ
 
 
 BIDDER_TIME = timedelta(minutes=6)
