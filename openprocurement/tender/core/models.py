@@ -230,16 +230,12 @@ class LotAuctionPeriod(Period):
         lot = self.__parent__
         if tender.status not in ['active.tendering', 'active.auction'] or lot.status != 'active':
             return
+        if tender.status == 'active.auction' and lot.numberOfBids < 2:
+            return
         if self.startDate and get_now() > calc_auction_end_time(lot.numberOfBids, self.startDate):
-            start_after = calc_auction_end_time(lot.numberOfBids, self.startDate)
+            start_after = calc_auction_end_time(tender.numberOfBids, self.startDate)
         else:
-            decision_dates = [
-                datetime.combine(complaint.dateDecision.date() + timedelta(days=3), time(0, tzinfo=complaint.dateDecision.tzinfo))
-                for complaint in tender.complaints
-                if complaint.dateDecision
-            ]
-            decision_dates.append(tender.tenderPeriod.endDate)
-            start_after = max(decision_dates)
+            start_after = tender.tenderPeriod.endDate
         return rounding_shouldStartAfter(start_after, tender).isoformat()
 
 
