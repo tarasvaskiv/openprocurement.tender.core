@@ -743,6 +743,10 @@ class Lot(BaseLot):
             if data.get('value').amount < value.amount:
                 raise ValidationError(u"value should be less than value of lot")
 
+    def validate_value(self, data, value):
+        if value.valueAddedTaxIncluded is not False:
+            raise ValidationError(u"Currently, only procedures with VAT excluded are supported")
+
 
 @implementer(ITender)
 class BaseTender(SchematicsDocument, Model):
