@@ -27,7 +27,6 @@ from openprocurement.api.models import (
 from openprocurement.api.utils import get_now
 from openprocurement.api.constants import (
     SANDBOX_MODE, COORDINATES_REG_EXP,
-    ADDITIONAL_CLASSIFICATIONS_SCHEMES,
     FUNDERS,
 )
 
@@ -172,11 +171,6 @@ def bids_validation_wrapper(validation_func):
             return
         return validation_func(klass, orig_data, value)
     return validator
-
-
-def validate_dkpp(items, *args):
-    if items and not any([i.scheme in ADDITIONAL_CLASSIFICATIONS_SCHEMES for i in items]):
-        raise ValidationError(u"One of additional classifications should be one of [{0}].".format(', '.join(ADDITIONAL_CLASSIFICATIONS_SCHEMES)))
 
 
 def validate_parameters_uniq(parameters, *args):
