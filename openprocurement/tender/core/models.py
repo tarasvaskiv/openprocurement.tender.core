@@ -81,7 +81,7 @@ class PeriodStartEndRequired(Period):
 
 class Guarantee(Model):
     amount = FloatType(required=True, min_value=0)  # Amount as a number.
-    currency = StringType(required=True, default=u'UAH', max_length=3, min_length=3)  # The currency in 3-letter ISO 4217 format.
+    currency = StringType(required=True, default=u'MDL', max_length=3, min_length=3)  # The currency in 3-letter ISO 4217 format.
 
 
 class ITender(IOPContent):
