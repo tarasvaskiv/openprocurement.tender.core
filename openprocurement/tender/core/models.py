@@ -248,6 +248,7 @@ class Contract(BaseContract):
         roles = {
             'create': blacklist('id', 'status', 'date', 'documents', 'dateSigned'),
             'edit': blacklist('id', 'documents', 'date', 'awardID', 'suppliers', 'items', 'contractID'),
+            'edit_pending.signed': whitelist('status'),
             'embedded': schematics_embedded_role,
             'view': schematics_default_role,
         }
@@ -267,6 +268,16 @@ class Contract(BaseContract):
                 raise ValidationError(u"Contract signature date should be after award complaint period end date ({})".format(award.complaintPeriod.endDate.isoformat()))
             if value > get_now():
                 raise ValidationError(u"Contract signature date can't be in the future")
+
+    def get_role(self):
+        root = self.__parent__
+        while root.__parent__ is not None:
+            root = root.__parent__
+        request = root.request
+        role = 'edit'
+        if request.authenticated_role == 'tender_owner' and request.context.status == 'pending.signed':
+            role = 'edit_pending.signed'
+        return role
 
 
 class LotValue(Model):
