@@ -64,7 +64,7 @@ class TestUtils(unittest.TestCase):
 
         db.get = db_get
         tender_id = generate_tender_id(ctime, db, server_id)
-        tid = 'UA-{:04}-{:02}-{:02}-{:06}{}'.format(
+        tid = 'MD-{:04}-{:02}-{:02}-{:06}{}'.format(
             ctime.year, ctime.month, ctime.day, 1,
             server_id and '-' + server_id)
         self.assertEqual(tid, tender_id)
