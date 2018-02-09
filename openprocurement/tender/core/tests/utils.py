@@ -99,7 +99,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(bellow_threshold, Tender)
 
     def test_calculate_business_date(self):
-        date_obj = datetime(2017,10,7)
+        date_obj = datetime(2017, 10, 7)
         delta_obj = timedelta(days=7)
 
         # Test with accelerator = 1440
@@ -118,7 +118,7 @@ class TestUtils(unittest.TestCase):
         # Test with working_days and timedelta_obj > timedelta()
         business_date = calculate_business_date(
             date_obj, delta_obj, working_days=True)
-        self.assertEqual(business_date, datetime(2017, 10, 19))
+        self.assertEqual(business_date, datetime(2017, 10, 18))
 
         # Test with working days and timedelta_obj < timedelta()
         business_date = calculate_business_date(
@@ -132,7 +132,7 @@ class TestUtils(unittest.TestCase):
         business_date = calculate_business_date(
             date_obj, delta_obj, working_days=True
         )
-        self.assertEqual(business_date, datetime(2017, 10, 18))
+        self.assertEqual(business_date, datetime(2017, 10, 17))
 
     @patch('openprocurement.tender.core.utils.error_handler')
     def test_tender_from_data(self, mocked_handler):
